@@ -42,19 +42,18 @@ class UsersList extends Component {
     });
   };
 
-  mapUsers = () => {
-    const { users } = this.state;
-    return users.map((u, index) => (
-      <UserListItem
-        key={u.id}
-        user={u}
-        isSelected={u.isSelected}
-        onSelect={() => this.onUserSelectHandler(index)}
-      />
-    ));
-  };
+  mapUser = (user, index) => (
+    <UserListItem
+      key={user.id}
+      user={user}
+      isSelected={user.isSelected}
+      onSelect={() => this.onUserSelectHandler(index)}
+    />
+  );
+
   render() {
-    return <ul>{this.mapUsers()}</ul>;
+    const { users } = this.state;
+    return <ul>{users.map(this.mapUser)}</ul>;
   }
 }
 export default UsersList;
