@@ -5,7 +5,7 @@ class Stopwatch extends Component {
     super(props);
     this.state = {
       isRunning: false,
-      time: new Date(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      time: new Date(0, 0, 0, 0, 0, 0, 0, 0),
     };
     this.timeoutId = null;
   }
@@ -13,8 +13,7 @@ class Stopwatch extends Component {
   tick = () => {
     this.setState((state, props) => {
       const { time } = state;
-      const newDate = new Date(time.getTime());
-      newDate.setSeconds(newDate.getSeconds() + 1);
+      const newDate = new Date(time.getTime() + 1000);
       return {
         time: newDate,
       };
@@ -38,15 +37,17 @@ class Stopwatch extends Component {
   };
 
   clear = () => {
-    clearTimeout(this.timeoutId);
-    this.timeoutId = null;
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
   };
 
   componentDidUpdate(prevProps, prevState) {
     const { isRunning } = this.state;
     this.clear();
     if (isRunning) {
-      this.timeoutId = setTimeout(this.tick, 1000);
+      this.timeoutId = setTimeout(this.tick, 3000);
     }
   }
 
@@ -58,19 +59,12 @@ class Stopwatch extends Component {
     this.start();
   }
 
-  twoDigit(v) {
-    return v > 9 ? v : `0${v}`;
-  }
-
   render() {
     const { time, isRunning } = this.state;
-    const hours = this.twoDigit(time.getHours());
-    const minutes = this.twoDigit(time.getMinutes());
-    const seconds = this.twoDigit(time.getSeconds());
 
     return (
       <article>
-        <div>{`${hours}:${minutes}:${seconds}`}</div>
+        <div>{time.toLocaleTimeString('it-IT')}</div>
         <button disabled={isRunning} onClick={this.start}>
           start
         </button>
