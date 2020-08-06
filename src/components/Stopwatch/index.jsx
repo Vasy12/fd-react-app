@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LA_LA_BLA_BLA_BLA from './Stopwatch.module.css';
 
 class Stopwatch extends Component {
   constructor(props) {
@@ -63,8 +64,10 @@ class Stopwatch extends Component {
     const { time, isRunning } = this.state;
 
     return (
-      <article>
-        <div>{time.toLocaleTimeString('it-IT')}</div>
+      <article className={LA_LA_BLA_BLA_BLA.wrapper}>
+        <div className={LA_LA_BLA_BLA_BLA.time}>
+          {time.toLocaleTimeString('it-IT')}
+        </div>
         <button disabled={isRunning} onClick={this.start}>
           start
         </button>

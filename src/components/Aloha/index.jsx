@@ -1,13 +1,13 @@
 import React from 'react';
-
+import './styles.css';
 const Aloha = props => {
   const { name, isGreeting } = props;
 
-  if (isGreeting) {
-    return <h1>Hello {name}</h1>;
-  }
-
-  return <strong>Goodbye {name}</strong>;
+  return (
+    <h1 className={'container'}>
+      {isGreeting ? 'hello' : 'bye'} {name}
+    </h1>
+  );
 };
 
 export default Aloha;

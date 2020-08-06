@@ -1,0 +1,9 @@
+@import './../../common/styles/vars';
+@import './../../common/styles/templates';
+
+.container {
+  @extend %flex-center;
+  height: 300px;
+  width: 300px;
+  border: 4px solid;
+}
