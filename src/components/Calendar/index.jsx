@@ -1,16 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Month from './Month';
+const getMonthWeeks = date => {
+  const weeks = [];
+  weeks.push(
+    <Week>
+      <CalendarDate date={} currentDate={currentDate} />
+      <CalendarDate date={} currentDate={currentDate} />
+      <CalendarDate date={} currentDate={currentDate} />
+      <CalendarDate date={} currentDate={currentDate} />
+      <CalendarDate date={} currentDate={currentDate} />
+      <CalendarDate date={} currentDate={currentDate} />
+      <CalendarDate date={} currentDate={currentDate} />
+    </Week>
+  );
+
+  return weeks;
+};
 
 const Calendar = props => {
   const { currentDate } = props;
+
   return (
     <article>
-      <section></section>
-      <section>
-        <Month year={2020} month={10} />
-      </section>
+      <Month>{getMonthWeeks(currentDate)}</Month>
     </article>
   );
 };
