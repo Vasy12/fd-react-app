@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import styles from './App.module.scss';
 import UsersLoader from './components/UsersLoader';
+import Counter from './components/Counter';
 const PageHeader = props => {
   return <header className={styles.header} {...props} />;
 };
@@ -17,7 +18,7 @@ const Navigation = () => {
           <Link to={'/users'}>USERS</Link>
         </li>
         <li>
-          <Link to={'/contacts'}>Contacts</Link>
+          <Link to={'/counter'}>COUNTER</Link>
         </li>
       </ul>
     </nav>
@@ -41,12 +42,19 @@ const Page = props => {
 };
 
 const App = () => {
+  const [step, setStep] = useState(1);
+
   return (
     <Router>
       <Switch>
-        <Route path="/contacts">
+        <Route path="/counter">
           <Page>
-            <ContactsPage />
+            <input
+              value={step}
+              type="number"
+              onChange={e => void setStep(+e.target.value)}
+            />
+            <Counter step={step} />
           </Page>
         </Route>
         <Route path="/users">
