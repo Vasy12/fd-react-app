@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
+import React, { Component, PureComponent } from 'react';
+import _ from 'lodash';
 class Counter extends Component {
   constructor(props) {
     super(props);
@@ -27,20 +26,25 @@ class Counter extends Component {
     });
   };
 
+  setSomeCounter = () => {
+    const { count } = this.state;
+    this.setState({
+      count,
+    });
+  };
+
   shouldComponentUpdate(nextProps, nextState) {
     return this.state.count !== nextState.count;
   }
 
   render() {
-    console.group('COUNTER RENDER');
-    console.groupEnd();
-
     const { count } = this.state;
     return (
       <article>
         <h1>{count}</h1>
         <button onClick={this.decrement}>-</button>
         <button onClick={this.increment}>+</button>
+        <button onClick={this.setSomeCounter}>set state</button>
       </article>
     );
   }
