@@ -1,8 +1,12 @@
 import React from 'react';
-import HyperlinkParser from './components/HyperlinksParser';
+import { SignUpForm } from './components/forms';
 
-const App = () => {
-  return <HyperlinkParser />;
-};
-
-export default App;
+export default function App() {
+  return (
+    <SignUpForm
+      onSubmit={(values, toolBox) => {
+        console.log(values);
+      }}
+    />
+  );
+}
