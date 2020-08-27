@@ -1,12 +1,15 @@
-import React from 'react';
-import { SignUpForm } from './components/forms';
+import React, { useState } from 'react';
+import Stopwatch from './components/HookStopwatch';
 
 export default function App() {
+  const [isVisible, setIsVisible] = useState(true);
+
   return (
-    <SignUpForm
-      onSubmit={(values, toolBox) => {
-        console.log(values);
-      }}
-    />
+    <>
+      <button onClick={() => void setIsVisible(!isVisible)}>
+        switch visible
+      </button>
+      {isVisible && <Stopwatch />}
+    </>
   );
 }
