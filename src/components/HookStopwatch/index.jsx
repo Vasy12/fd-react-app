@@ -1,38 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { addSeconds, format, startOfDay } from 'date-fns';
+import { startOfYear, addMilliseconds } from 'date-fns';
+import { format } from 'date-fns/esm';
 
 function Stopwatch() {
-  const [time, setTime] = useState(startOfDay(new Date()));
+  const [time, setTime] = useState(startOfYear(new Date()));
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
     if (isRunning) {
-      const idValue = setTimeout(() => {
-        setTime(addSeconds(time, 1));
-      }, 1000);
+      const intervalId = setInterval(() => {
+        setTime(prevValue => addMilliseconds(prevValue, 1000));
+      }, 990);
       return () => {
-        clearTimeout(idValue);
+        clearInterval(intervalId);
       };
     }
-  }, [isRunning, time]);
+  }, [isRunning]);
+
+  const switchIsRunning = () => {
+    setIsRunning(prevValue => !prevValue);
+  };
+
+  const resetTime = () => {
+    setTime(prevValue => startOfYear(prevValue));
+    setIsRunning(false);
+  };
 
   return (
     <article>
-      <h1>{format(time, 'HH:mm:ss')}</h1>
-      <button
-        onClick={() => {
-          setIsRunning(!isRunning);
-        }}
-      >
-        {isRunning ? 'stop' : 'start'}
-      </button>
-      <button
-        onClick={() => {
-          setTime(startOfDay(new Date()));
-        }}
-      >
-        reset
-      </button>
+      <h1>{format(time, 'HH:mm:ss:SSS')}</h1>
+      <button onClick={switchIsRunning}>{isRunning ? 'stop' : 'start'}</button>
+      <button onClick={resetTime}>reset</button>
     </article>
   );
 }

@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
-import Stopwatch from './components/HookStopwatch';
+import React, { useState, useDebugValue } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import PageHeader from './components/PageHeader';
+import UsersPage from './pages/UsersPage';
+import AppNav from './components/AppNav';
+import Test from './components/Test';
+import Chat from './components/Chat';
 
-export default function App() {
-  const [isVisible, setIsVisible] = useState(true);
+export const AppContext = React.createContext({});
+
+const App = () => {
+  const menuState = useState(false);
 
   return (
-    <>
-      <button onClick={() => void setIsVisible(!isVisible)}>
-        switch visible
-      </button>
-      {isVisible && <Stopwatch />}
-    </>
+    <AppContext.Provider
+      value={{
+        menu: menuState,
+      }}
+    >
+      <Router>
+        <PageHeader />
+        <AppNav />
+        <Switch>
+          <Route path="/" exact>
+            <Test />
+          </Route>
+          <Route path="/chat" exact>
+            <Chat />
+          </Route>
+          <Route path="/users">
+            <UsersPage />
+          </Route>
+        </Switch>
+      </Router>
+    </AppContext.Provider>
   );
-}
+};
+
+export default App;

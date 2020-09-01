@@ -1,0 +1,55 @@
+$width-value: 400px;
+$height-value: 300px;
+
+.container {
+  width: $width-value;
+  height: $height-value;
+  margin: 20px;
+  //animation
+  perspective: 1000px;
+
+  &:hover > .innerWrapper {
+    transform: rotateY(180deg);
+  }
+  .innerWrapper {
+    position: relative;
+    width: inherit;
+    height: inherit;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+
+    & > * {
+      position: absolute;
+      width: inherit;
+      height: inherit;
+      overflow: hidden;
+      backface-visibility: hidden; // 3d property
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    & > .backSide {
+      background-color: purple;
+      transform: rotateY(180deg);
+    }
+  }
+}
+
+.imageWrapper {
+  width: $width-value;
+  height: $height-value;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 60px;
+  font-weight: bold;
+  text-shadow: 0 0 6px gray;
+
+  & > img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+    object-position: top;
+  }
+}

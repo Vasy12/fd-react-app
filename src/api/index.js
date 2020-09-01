@@ -3,33 +3,29 @@ import queryString from 'query-string';
 import config from './../config/config.json';
 
 const {
-  api: { baseUrl, seed, user: USER_CONFIG },
+  api: { baseUrl, user },
 } = config;
 
 /**
  *
- * @param {object} [options]
- * @param {string} [options.seed]
- * @param {number} [options.page]
- * @param {number} [options.results]
- * @param {Array<string>} [options.inc]
+ * @param {object} [queryParams]
+ * @param {string} [queryParams.seed]
+ * @param {number} [queryParams.page]
+ * @param {number} [queryParams.results]
+ * @param {Array<string>} [queryParams.inc]
  */
-export const getUsers = (options = {}) => {
-  const defaultOptions = {
-    page: 1,
-    seed,
-    results: 20,
-    inc: USER_CONFIG.fields,
-  };
+export const getUsers = queryParams => {
+  const { allowedQueryParams, defaultQueryParams } = user;
 
-  const finalOptions = {
-    ...defaultOptions,
-    ...options,
-  };
+  const finalParamsObject = _.pick(
+    {
+      ...defaultQueryParams,
+      ...queryParams,
+    },
+    allowedQueryParams
+  );
 
-  const queryParamsObject = _.pick(finalOptions, USER_CONFIG.queryParams);
-
-  const fetchParamsString = queryString.stringify(queryParamsObject, {
+  const fetchParamsString = queryString.stringify(finalParamsObject, {
     arrayFormat: 'comma',
   });
 

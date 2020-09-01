@@ -1,24 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import UserCard from '../UserCard';
 
-import UserListItem, { userPropType } from './UserListItem';
+function UsersList(props) {
+  const { users } = props;
 
-const UsersList = props => {
-  const { users, setUsers } = props;
-
-  const onUserSelectHandler = index => {
-    const newUsers = [...users];
-    newUsers[index].isSelected = !newUsers[index].isSelected;
-    setUsers(newUsers);
-  };
-
-  const mapUser = (user, index) => <UserListItem key={user.id} user={user} />;
-
-  return <ul>{users.map(mapUser)}</ul>;
-};
+  return (
+    <ol>
+      {users.map(u => {
+        return <li key={u.email}>{<UserCard {...u} />}</li>;
+      })}
+    </ol>
+  );
+}
 
 UsersList.propTypes = {
-  users: PropTypes.arrayOf(userPropType).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default UsersList;

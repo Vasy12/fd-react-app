@@ -1,0 +1,26 @@
+.menu {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  min-height: 100vh;
+  max-width: 320px;
+  min-width: 320px;
+  z-index: 10000;
+  overflow: hidden;
+  background-color: cornflowerblue;
+  transition-property: left;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+
+.menuOpen {
+  left: 0;
+}
+
+.link {
+  color: white;
+}
+
+.linkActive {
+  border: 2px solid blue;
+}

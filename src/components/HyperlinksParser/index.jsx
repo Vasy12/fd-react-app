@@ -1,55 +1,29 @@
-import React, { Component } from 'react';
-import { string } from 'yup';
-import Form from './Form';
+import React from 'react';
+import { useData } from '../hooks';
 
-class HyperlinksParser extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      htmlText: '',
-      isFetching: false,
-    };
-  }
-
-  loadHtmlText = url => {
-    return fetch(url, {
-      method: 'GET',
+function HyperlinkParser() {
+  const { isFetching, error, data: htmlText } = useData(() =>
+    fetch('https://developer.mozilla.org/en-US/docs/Learn', {
       'Content-type': 'text/html',
-    })
-      .then(response => response.text())
-      .then(data => {
-        this.setState({
-          htmlText: data,
-        });
-      })
-      .catch(error => {
-        this.setState({
-          error,
-        });
-      });
-  };
+    }).then(res => res.text())
+  );
 
-  handleSubmit = ({ values: { url } }) => {
-    this.loadHtmlText(url);
-  };
-
-  render() {
-    const { htmlText } = this.state;
-    return (
-      <article>
-        <Form onSubmit={this.handleSubmit} />
-        <section>
-          {/*
-                
-                YOUR CODE HERE
-                    <h1>HTML</h1>
-                    <p>{htmlText}</p>
-                */}
-        </section>
-      </article>
-    );
+  let status = '';
+  if (isFetching) {
+    status = 'Loading...';
   }
+  if (error) {
+    status = 'Error';
+  }
+  if (htmlText) {
+    status = 'Loaded';
+  }
+
+  return (
+    <article>
+      <h1>Status: {status}</h1>
+    </article>
+  );
 }
 
-export default HyperlinksParser;
+export default HyperlinkParser;
